@@ -11,11 +11,11 @@ class CustomUser(AbstractUser):
         return self.username
 
 
-class Book(models.Models):
+class Book(models.Model):
     title = models.CharField(max_length=200, blank=True, default='', help_text='Enter a book title')
-    author = models.CharField(max_length=200, blank=True, defaul='', help_text='Enter the author')
+    author = models.CharField(max_length=200, blank=True, default='', help_text='Enter the author')
     publication_date = models.DateField(blank=True, default='')
-    genre = models.CharField(max=100, blank=True, default='', help_text='Enter genre')
+    genre = models.CharField(max_length=100, blank=True, default='', help_text='Enter genre')
     featured = models.BooleanField(default=False)
 
     class Meta:
@@ -27,39 +27,26 @@ class Book(models.Models):
         return self.title
 
 
-class Note(models.Models):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name)
-    book = models.ForeignKey
-    created_at = models.DateField(auto_now_add=True)
-    note = models.TextField(max_length=200, blank=True, null=True, help_text='Write your notes here')
-    private = models.BooleanField(default=True)
-    page = models.PositiveIntegerField(blank=True, null=True)
-
-
-    def __str__(self):
-        return self.note
-
-
 class Track(models.Model):
+    WISHLIST = 'WT'
+    READING = 'RG'
+    FINISHED = 'FN'
+    STATUS_CHOICES = [
+        (WISHLIST, 'want to read'),
+        (READING, 'reading'),
+        (FINISHED, 'finished')
+    ]
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='track_users')
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='track_books')
-    WANT = 'WR'
-    READING = 'RG'
-    READ = 'RD'
-    STATUS_CHOICES = [
-        (WANT, 'Want to read'),
-        (READING, 'Reading'),
-        (READ, 'Read'),
-    ]
-    status = models.CharField(max_length=100, choices=STATUS_CHOICES, default=WANT)
+    status = models.CharField(max_length=100, choices=STATUS_CHOICES, default=WISHLIST)
 
     def __str__(self):
         return f'{self.status} {self.book}'
 
 
 class Note(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='note_users')
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='note_books')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='note_user')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='note_book')
     created_at = models.DateField(auto_now_add=True)
     note = models.TextField(max_length=200, blank=True, null=True, help_text='Write your notes here')
     private = models.BooleanField(default=True)
@@ -68,3 +55,5 @@ class Note(models.Model):
 
     def __str__(self):
         return self.note
+
+
