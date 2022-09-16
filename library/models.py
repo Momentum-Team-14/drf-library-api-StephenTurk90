@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.constraints import UniqueConstraint
 
 
-
 class CustomUser(AbstractUser):
     pass
 

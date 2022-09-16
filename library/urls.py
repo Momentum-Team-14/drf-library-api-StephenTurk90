@@ -5,6 +5,7 @@ from library import views
 urlpatterns = [
     path('book/', views.BookList.as_view(), name="book-list"),
     path('book/<int:pk>/', views.BookDetail.as_view(), name="book-detail"),
+    path('book/<int:pk>/track/', views.TrackListCreate.as_view(), name="track-create"),
     path('track/', views.TrackList.as_view(), name="track-list"),
     path('track/<int:pk>/', views.TrackDetail.as_view(), name="track-detail"),
     path('note/', views.NoteList.as_view(), name="note-list"),
