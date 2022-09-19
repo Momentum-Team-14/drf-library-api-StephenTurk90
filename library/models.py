@@ -47,7 +47,7 @@ class Note(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='note_user')
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='note_book')
     created_at = models.DateField(auto_now_add=True)
-    note = models.TextField(max_length=200, blank=True, null=True, help_text='Write your notes here')
+    note = models.TextField(max_length=200, blank=True, null=True, help_text='Type your notes here')
     private = models.BooleanField(default=True)
     page = models.PositiveIntegerField(blank=True, null=True)
 
